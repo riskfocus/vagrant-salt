@@ -12,3 +12,4 @@
 .byebug_history
 /keys/
 /vendor/
+.rspec

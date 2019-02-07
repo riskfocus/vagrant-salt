@@ -1,14 +1,24 @@
-require 'salt/minion'
+require 'json'
+require 'salt'
+
 module Salt
   class Master < Minion
+    def initialize(name, info)
+      self['master_config'] = {}
+      self['minions'] = {}
+
+      super
+      
+    end
     
-    # create the list of minion keys that the master should be seeded with
+    def registerMinion(minion)
+      self['minions'][minion.name] = minion
+      minion['master'] = self
+    end
+
+    # create the hash of minion keys that the master should be seeded with
     def minionList
-      keylist = {}
-      @info['minions'].each do |h|
-        keylist[h] = @keypath + "/#{h}.pub"
-      end
-      return keylist
+      self['minions'].transform_values {|v| v.pub_key }
     end
     
     def setDefaults(salt)
@@ -21,10 +31,15 @@ module Salt
     end
     
     def addMasterConfig(salt)
-      if @role_config.has_key?('master_config')
-        mconf = File.read(@role_config['master_config']).gsub(/\n\s*/, " ")
-        salt.master_json_config = eval("\"" + mconf.gsub(/"/, '\"') + "\"")
+      self['minions'].each do |n, v|
+        if v.is_a?(Salt::Syndic)
+          self['master_config']['order_masters'] = true
+          break
+        end
       end
+
+      salt.master_json_config = self['master_config'].to_json
+
     end
     
   end

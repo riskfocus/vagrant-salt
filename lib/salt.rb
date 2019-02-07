@@ -1,10 +1,11 @@
-require 'salt/factory'
+require 'salt/config'
 require 'salt/host'
 require 'salt/minion'
 require 'salt/master'
 require 'salt/syndic'
+require 'salt/factory'
 
 module Salt
-  VERSION = "0.1.1"  
+  VERSION = "0.1.2"  
 end
 # Copyright (C) 2019 by Risk Focus Inc.  All rights reserved

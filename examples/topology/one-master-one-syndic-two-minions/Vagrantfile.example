@@ -1,0 +1,31 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+require 'yaml'
+
+$LOAD_PATH.push File.expand_path('salt-vagrant/lib')
+require  'salt'
+
+hconfig = YAML.load_file("saltconfig.yml")
+
+# hosts is a hash of Salt host classes
+hosts = Salt::Factory.new(hconfig).create
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/7"
+
+  ##############
+  ##  Configure
+  ##############
+  hosts.each do |n, h|
+    config.vm.define h.name.to_sym  do |host|
+      host.vm.host_name = "#{h.name}.local"
+      host.vm.network "private_network", ip: h.ip
+
+      
+      host.vm.provision :salt do |salt|
+        h.setDefaults(salt)
+      end
+
+    end
+  end
+end

@@ -3,6 +3,10 @@ hosts:
     role: minion
     ip: 10.0.44.10
     master: master
+  minion2:
+    role: minion
+    ip: 10.0.44.11
+    master: master
   master: 
     role: master
     ip: 10.0.44.2

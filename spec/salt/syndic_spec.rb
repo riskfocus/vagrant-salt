@@ -4,11 +4,11 @@ RSpec.describe Salt::Syndic do
   before :each do
     @name = "myName"
     @info = {"ip" => "199.199.199.199",
-             "minions" => []
+             "grains" => "tmp/myName",
+             'master' => 'master'
             }
-    @role_config = {"grains" => "tmp/myName"}
     
-    @obj = Salt::Syndic.new(@name, @info, @role_config)
+    @obj = Salt::Syndic.new(@name, @info)
   end
   it "has a version number" do
     expect(Salt::VERSION).not_to be nil
@@ -25,25 +25,37 @@ RSpec.describe Salt::Syndic do
       expect( @obj.role ).to eq('syndic')
     end
   end
-    describe "#setDefaults" do
+  context "registered to a master" do
     before :each do
-      allow(File).to receive(:read).and_return("")
       @salt = double
-      allow(@salt).to receive(:seed_master=)
-      allow(@salt).to receive(:install_master=)
+      @master = Salt::Master.new('master', @info)
+      @master.registerMinion(@obj)
     end
+    describe "#addMasterConfig" do
+      it "correctly adds the syndic_master key" do
+        expect(@salt).to receive(:master_json_config=).with("{\"syndic_master\":\"199.199.199.199\"}")
+        @obj.addMasterConfig(@salt)
+      end
+    end
+  
+    describe "#setDefaults" do
+      before :each do
+        allow(@salt).to receive(:seed_master=)
+        allow(@salt).to receive(:install_master=)
+      end
     
-    it "should set defaults" do
-      allow(@salt).to receive(:colorize=)
-      allow(@salt).to receive(:grains_config=) { "bob" }
-      allow(@salt).to receive(:minion_pub=)
-      allow(@salt).to receive(:minion_key=)
-      allow(@salt).to receive(:master_json_config=)
-
-      expect(@salt).to receive(:install_syndic=)
-      @obj.setDefaults(@salt)
+      it "should set defaults" do
+        allow(@salt).to receive(:colorize=)
+        allow(@salt).to receive(:grains_config=) { "bob" }
+        allow(@salt).to receive(:minion_pub=)
+        allow(@salt).to receive(:minion_key=)
+        allow(@salt).to receive(:master_json_config=)
+        allow(@salt).to receive(:minion_json_config=)
+        
+        expect(@salt).to receive(:install_syndic=).with(true)
+        @obj.setDefaults(@salt)
+      end
     end
-    end
-    
+  end
 end
 # Copyright (C) 2019 by Risk Focus Inc.  All rights reserved

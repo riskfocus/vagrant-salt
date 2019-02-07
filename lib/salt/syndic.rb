@@ -8,6 +8,13 @@ module Salt
       super
       
     end
+
+    def addMasterConfig(salt)
+      # add syndic-master config
+      self['master_config']['syndic_master'] = self['master'].ip
+
+      super
+    end
   end
 end
 

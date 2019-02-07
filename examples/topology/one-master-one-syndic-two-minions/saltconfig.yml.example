@@ -2,6 +2,16 @@ hosts:
   minion1:
     role: minion
     ip: 10.0.44.10
+    master: syndic
+  minion2:
+    role: minion
+    ip: 10.0.44.11
+    master: syndic
+  syndic: 
+    role: syndic
+    ip: 10.0.44.3
+    memory: 1536
+    cpus: 2
     master: master
   master: 
     role: master
