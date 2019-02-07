@@ -21,7 +21,7 @@ RSpec.describe Salt::Factory do
                                    "master" => {
                                      "ip" => "1.2.3.4",
                                      "role" => "master",
-                                     "master" => "master",
+                                     "master" => "master"
                                    },
                                    "minion" => {
                                        "ip" => "1.2.3.5",
@@ -69,7 +69,8 @@ RSpec.describe Salt::Factory do
                                    "syndic" => {
                                      "ip" => "1.2.3.5",
                                      "role" => "syndic",
-                                     "master" => "master"
+                                     "master" => "master",
+                                     "syndic_master" => "syndic"
                                    },
                                    "minion" => {
                                        "ip" => "1.2.3.5",

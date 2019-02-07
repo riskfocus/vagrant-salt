@@ -1,11 +1,12 @@
 require 'salt/syndic'
-
+require 'byebug'
 RSpec.describe Salt::Syndic do
   before :each do
     @name = "myName"
     @info = {"ip" => "199.199.199.199",
              "grains" => "tmp/myName",
-             'master' => 'master'
+             'master' => 'master',
+             'syndic_master' => 'master'
             }
     
     @obj = Salt::Syndic.new(@name, @info)
@@ -25,10 +26,23 @@ RSpec.describe Salt::Syndic do
       expect( @obj.role ).to eq('syndic')
     end
   end
+
+  describe "#registerSyndic" do
+    it "can register a syndic" do
+      @master = Salt::Master.new('master', {'ip' => '10.10.10.10', 'role' => 'master'})
+      @master.registerSyndic(@obj)
+
+      expect(@master['syndics']).to have_key(@obj.name)
+
+      #key should be added to minion list (to be auto-accepted)
+      expect(@master['minions']).to have_key(@obj.name)
+    end
+  end
   context "registered to a master" do
     before :each do
       @salt = double
       @master = Salt::Master.new('master', @info)
+      @master.registerSyndic(@obj)
       @master.registerMinion(@obj)
     end
     describe "#addMasterConfig" do

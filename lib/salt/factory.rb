@@ -31,6 +31,11 @@ module Salt
       hostlist.each do |n, v|
         # sets v['master'] to the object
         hostlist[ v['master'] ].registerMinion(v)
+        
+        if v.instance_of?(Salt::Syndic)
+          hostlist[ v['syndic_master'] ].registerSyndic(v)
+        end
+        
       end
       
       return hostlist

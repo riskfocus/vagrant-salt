@@ -1,17 +1,15 @@
 module Salt
   class Syndic < Master
-    attr_accessor :syndic_master
-    
     def setDefaults(salt)
       salt.install_syndic = true
-
+      
       super
       
     end
-
+      
     def addMasterConfig(salt)
       # add syndic-master config
-      self['master_config']['syndic_master'] = self['master'].ip
+      self['master_config']['syndic_master'] = self['syndic_master']['ip']
 
       super
     end
