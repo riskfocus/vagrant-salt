@@ -10,11 +10,11 @@ module Salt
     end
     
     def pub_key
-      @keypath + "/#{@name}.pub"
+      File.join(@keypath,  "#{@name}.pub")
     end
     
     def pem_key
-      @keypath + "/#{@name}.pem"
+      File.join(@keypath,  "/#{@name}.pem")
     end
     
     def keygen

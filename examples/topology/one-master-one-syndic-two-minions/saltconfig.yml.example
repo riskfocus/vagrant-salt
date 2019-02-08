@@ -12,10 +12,27 @@ hosts:
     ip: 10.0.44.3
     memory: 1536
     cpus: 2
-    master: master
+    master: syndic
+    syndic_master: master
+    master_config:
+      worker_threads: 2
+      file_roots: 
+        base: 
+          - /vagrant/saltstack/salt
+      pillar_roots: 
+        base:
+          - /vagrant/saltstack/pillar
   master: 
     role: master
     ip: 10.0.44.2
     memory: 1536
     cpus: 2
     master: master
+    master_config:
+      worker_threads: 2
+      file_roots: 
+        base: 
+          - /vagrant/saltstack/salt
+      pillar_roots: 
+        base:
+          - /vagrant/saltstack/pillar

@@ -59,6 +59,6 @@ hosts:
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/petermeulbroek/salt-vagrant.
+Bug reports and pull requests are welcome on GitHub at https://github.com/riskfocus/vagrant-salt
 
 Copyright (C) 2019 by Risk Focus, Inc

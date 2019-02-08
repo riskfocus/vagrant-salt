@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 require 'yaml'
 
-$LOAD_PATH.push File.expand_path('salt-vagrant/lib')
+$LOAD_PATH.push File.expand_path('vagrant-salt/lib')
 require  'salt'
 
 hconfig = YAML.load_file("saltconfig.yml")

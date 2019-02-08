@@ -1,17 +1,24 @@
 A list of changes for this set of classes
 
-1. redo the way configuration is managed.  There should be a mapping
-   class from what is specified in the structure to what the salt
-   config object needs.  Since the mapping is static, it should be
-   configuration, not code
+* Tasks
 
-2. redo the salt bootstrapping configuration strings.  Right now they
-   are json files; they should be dictionaries that get rendered into json
+** TODO Move bugs to GitHub.   
+        TODO is great, but time to use GitHub tracking
+** TODO Config. 
+        redo the way configuration is managed.  There should be a
+        mapping class from what is specified in the structure to what
+        the salt config object needs.  Since the mapping is static, it
+        should be configuration, not code
 
-3. redo the minion mappings.  Minions should 'register' with their
-   master, not the reverse.
+** DONE redo the salt bootstrapping configuration strings.  Right now
+        they are json files; they should be dictionaries that get
+        rendered into json
 
-4. redo syndic. Creation should add a key to its master
-   "order_masters: True", and add a key to its configuration
-   (syndic_master) instead of master
+** DONE redo the minion mappings.  Minions should 'register' with
+        their master, not the reverse.
+
+** DONE redo syndic. Creation should add a key to its master
+        "order_masters: True", and add a key to its configuration
+        (syndic_master) instead of master
+
 
