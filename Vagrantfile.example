@@ -21,7 +21,11 @@ Vagrant.configure("2") do |config|
       host.vm.host_name = "#{h.name}.local"
       host.vm.network "private_network", ip: h.ip
 
-      
+      host.vm.provider "virtualbox" do |vb|
+        vb.memory = h.memory
+        vb.cpus = h.cpus
+      end
+
       host.vm.provision :salt do |salt|
         h.setDefaults(salt)
       end

@@ -32,6 +32,14 @@ module Salt
       self["ip"]
     end
 
+    def cpus
+      self["cpus"] || '1'
+    end
+
+    def memory
+      self["memory"] || '512'
+    end
+
   end
   
   
