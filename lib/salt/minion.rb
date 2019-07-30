@@ -37,7 +37,7 @@ module Salt
       end
       
       salt.colorize = true
-      
+      salt.install_args = self["install_args"]
       # write the keys
       self.keygen
       salt.grains_config = self["grains"]
